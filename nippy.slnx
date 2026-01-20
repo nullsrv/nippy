@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="src/nip_dll.vcxproj" Id="decdccb3-f500-499a-b1f6-415ff9954736" />
+</Solution>
