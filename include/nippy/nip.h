@@ -42,11 +42,11 @@ extern "C" {
  * @defgroup version Version information.
  * @{
  */
-#define NIP_VERSION_MAJOR       0                       ///< Major version constant.
-#define NIP_VERSION_MINOR       15                      ///< Minor version constant.
-#define NIP_VERSION_REVISON     255                     ///< Revision version constant.
-#define NIP_VERSION             0x0FFF                  ///< Version number constant MNrr.
-#define NIP_VERSION_STRING      "0.15.255"              ///< Version string.
+#define NIP_VERSION_MAJOR       1                       ///< Major version constant.
+#define NIP_VERSION_MINOR       0                       ///< Minor version constant.
+#define NIP_VERSION_REVISON     0                       ///< Revision version constant.
+#define NIP_VERSION             0x0100                  ///< Version number constant MNrr.
+#define NIP_VERSION_STRING      "1.0.0"                 ///< Version string.
 /** @} */
 
 /**
