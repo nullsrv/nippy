@@ -44,9 +44,9 @@ extern "C" {
  */
 #define NIP_VERSION_MAJOR       1                       ///< Major version constant.
 #define NIP_VERSION_MINOR       0                       ///< Minor version constant.
-#define NIP_VERSION_REVISON     0                       ///< Revision version constant.
-#define NIP_VERSION             0x0100                  ///< Version number constant MNrr.
-#define NIP_VERSION_STRING      "1.0.0"                 ///< Version string.
+#define NIP_VERSION_REVISON     1                       ///< Revision version constant.
+#define NIP_VERSION             0x0101                  ///< Version number constant MNrr.
+#define NIP_VERSION_STRING      "1.0.1"                 ///< Version string.
 /** @} */
 
 /**
@@ -170,6 +170,7 @@ typedef enum NipError {
     NIP_ERROR_EXPECTED_RBRACKET             = -25,
     NIP_ERROR_EXPECTED_SECTION_OR_KEY       = -26,
     NIP_ERROR_WRITE_FAILED                  = -27,
+    NIP_ERROR_MISSING_SECTION               = -28,
     NIP_ERROR_PANIC                         = -128,
 
 } NipError;
@@ -2138,12 +2139,8 @@ static NipError _nip_parse_section(Nip1 *nip) {
         return _nip_error(nip, r_bracket, NIP_ERROR_EXPECTED_RBRACKET);
     }
 
-    // Mark section as used.
-    if (nip->current_section) {
-        nip->current_section->used = true;
-    }
-
     nip->current_section = section;
+    nip->current_section->used = true;
 
     return NIP_OK;
 }
@@ -2395,7 +2392,11 @@ NipError nip_parse_finish(Nip1 *nip) {
 
     for (uint32_t i = 0; i < nip->sections.len; i += 1) {
         NipSection *section = &nip->sections.ptr[i];
-        if (!section->used && !section->optional) {
+        if (!section->used) {
+            if (!section->optional) {
+                return NIP_ERROR_MISSING_SECTION;
+            }
+        } else {
             for (uint32_t j = 0; j < section->kv.len; j += 1) {
                 NipKV *kv = &section->kv.ptr[j];
                 if ((kv->flags & NIP_KV_FLAGS_ALREADY_USED) == 0) {
