@@ -44,9 +44,9 @@ extern "C" {
  */
 #define NIP_VERSION_MAJOR       1                       ///< Major version constant.
 #define NIP_VERSION_MINOR       0                       ///< Minor version constant.
-#define NIP_VERSION_REVISON     1                       ///< Revision version constant.
-#define NIP_VERSION             0x0101                  ///< Version number constant MNrr.
-#define NIP_VERSION_STRING      "1.0.1"                 ///< Version string.
+#define NIP_VERSION_REVISON     2                       ///< Revision version constant.
+#define NIP_VERSION             0x0102                  ///< Version number constant MNrr.
+#define NIP_VERSION_STRING      "1.0.2"                 ///< Version string.
 /** @} */
 
 /**
@@ -2541,7 +2541,7 @@ NipError nip_push(Nip1 *nip, const NipKvDesc desc) {
 
     memcpy(&kv->min_value, &desc.range.min, sizeof(desc.range.min));
     if (desc.value.type == NIP_VALUE_TYPE_STRING || desc.value.type == NIP_VALUE_TYPE_CHAR_BUFFER) {
-        if (desc.def_value.type == desc.value.type) {
+        if (desc.def_value.type == NIP_VALUE_TYPE_STRING) {
             size_t len = _nip_strnlen(desc.def_value.data.str, NIP_MAX_DEFAULT_STRING_LENGTH);
             kv->max_value.def_str_len = len;
         }
